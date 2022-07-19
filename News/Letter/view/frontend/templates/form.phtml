@@ -1,0 +1,67 @@
+<div class="row clearfix">
+
+  <div class="col-md-12 column">    
+    <form name="form_value" 
+      data-mage-init='{"validation":{}}'  
+       method="POST" 
+       id="form_value">
+
+                    <label>Enter Email</label>
+                    <input type="email" 
+                    name="numone" 
+                    pattern="[^ @]*@[^ @]*"  
+                    data-validate="{required:true}"
+                        class="form-control input-md" 
+
+                        style="margin:20px;width:300px;"
+
+                         autocomplete="off">
+
+                    <br/><br/>
+                  
+                    <input type="submit" id="calculateTotalSubmit"  name="calculate-total-submit" value="Subscribe">
+               
+                </div> 
+
+            </form>
+            
+            <br/><br/>
+
+
+            Result
+            
+            <div class="result" style="display:none"></div>
+
+        </div>
+    </div>
+
+<script>
+
+require(['jquery'],function(){
+    jQuery(document).ready(function() {
+        jQuery(".result").hide();
+        jQuery("#form_value").submit(function(){
+            
+            var oneValue = jQuery("input[name='numone']").val();
+            
+          
+
+            var url = "<?php echo $block->getBaseUrl().'newsletter/result/result/' ?>";
+            jQuery.ajax({
+            url: url,
+            type: "POST",
+            data: {numone:oneValue},
+            showLoader: true,
+            cache: false,
+            success: function(response){
+                console.log(response.output);
+                jQuery(".result").show();
+                jQuery(".result").text(response.output);
+            }
+        });
+        return false;
+        });
+    });
+});
+
+</script>
